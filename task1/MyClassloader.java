@@ -22,6 +22,7 @@ public class MyClassloader extends ClassLoader {
     @Override
     protected Class<?> findClass(final String className) throws ClassNotFoundException {
         try {
+            log.info(pathToFolder + className + CLASS_EXTENSION + "; " + className);
             byte[] loaded = fetchFileSystem(pathToFolder + className + CLASS_EXTENSION);
             return defineClass(className, loaded, 0, loaded.length);
         } catch (final FileNotFoundException e) {

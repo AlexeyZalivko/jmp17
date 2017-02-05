@@ -15,16 +15,10 @@ public class Main {
 
         final List<Animal> animals = new ArrayList<>();
 
-        final Class dog = myLoader.loadClass("Dog");
-        final Class cat = myLoader.loadClass("Cat");
-
         try {
             for (int i = 0; i < 4; i++) {
-                if (i % 2 == 0) {
-                    animals.add((Animal) dog.newInstance());
-                } else {
-                    animals.add((Animal) cat.newInstance());
-                }
+                final Class animal = myLoader.loadClass((i % 2 == 0) ? "Dog" : "Cat");
+                animals.add((Animal) animal.newInstance());
             }
         } catch (InstantiationException e) {
             e.printStackTrace();
