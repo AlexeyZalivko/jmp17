@@ -1,5 +1,0 @@
-./Animal.java
-./Cat.java
-./Dog.java
-./Main.java
-./MyClassloader.java
