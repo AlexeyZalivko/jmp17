@@ -1,5 +1,5 @@
-jmp/animals/Dog.class
-jmp/Main.class
-jmp/animals/Animal.class
-jmp/animals/Cat.class
-jmp/MyClassloader.class
+edu/jmp/animals/Cat.class
+edu/jmp/MyClassloader.class
+edu/jmp/animals/Dog.class
+edu/jmp/Main.class
+edu/jmp/animals/Animal.class
