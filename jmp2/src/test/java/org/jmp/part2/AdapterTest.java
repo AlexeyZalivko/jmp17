@@ -7,11 +7,14 @@ import org.jmp.part2.patterns.adapter.StackAdapter;
 import org.junit.Test;
 
 import java.util.Random;
+import java.util.logging.Logger;
 
 /**
  * Created by alex on 02.03.17.
  */
 public class AdapterTest {
+
+    private static Logger log = Logger.getLogger(AdapterTest.class.getName());
 
     @Test
     public void arrayListAdapterTest() throws InstantiationException, IllegalAccessException {
@@ -32,8 +35,13 @@ public class AdapterTest {
     }
 
     private Adapter generateAdapter(final Class adapterClass) throws IllegalAccessException, InstantiationException {
-        final Adapter adapter = (Adapter) adapterClass.newInstance();
+        Adapter adapter = (Adapter) adapterClass.newInstance();
+        adapter = prefillData4Adapter(adapter);
 
+        return adapter;
+    }
+
+    private Adapter prefillData4Adapter(final Adapter adapter) {
         final Random rnd = new Random();
 
         for (int i = 0; i < rnd.nextInt(10) + 3; i++) {
@@ -46,13 +54,12 @@ public class AdapterTest {
     private void log(final Adapter adapter) {
 
         try {
-            System.out.println("-==================-");
             Object element = adapter.pop();
             boolean isContinue = element != null;
             while (isContinue) {
                 element = adapter.pop();
                 isContinue = element != null;
-                System.out.println(element);
+                log.info(element.toString());
             }
         } catch (Exception e) {
 

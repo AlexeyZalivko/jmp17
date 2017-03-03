@@ -1,6 +1,6 @@
 first
-second line
+   second line
 that is third line
 What about this line?
-this is fifth line
+this  is fifth line
 bye

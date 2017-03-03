@@ -12,6 +12,8 @@ import java.util.List;
  */
 public final class ObserverImpl extends Observer {
 
+    public static final String SPACE_DELIMETER = "\\s+";
+
     public void readFile(final File file) {
         if (file == null) {
             return;
@@ -48,12 +50,12 @@ public final class ObserverImpl extends Observer {
 
     private String getLongestWord(final String line, final String previousLongestWord) {
         if (line == null) {
-            return line;
+            return previousLongestWord;
         }
 
-        final List<String> words = Arrays.asList(line.split(" "));
+        final List<String> words = Arrays.asList(line.trim().split(SPACE_DELIMETER));
         if (words == null) {
-            return line;
+            return previousLongestWord;
         }
 
         String longestWord = (previousLongestWord != null) ? previousLongestWord : words.get(0);
