@@ -1,0 +1,9 @@
+edu/jmp/dao/data/NewsItem.class
+edu/jmp/dao/NewsDBManager.class
+edu/jmp/dao/management/NewsBean.class
+edu/jmp/dao/management/SQLHelper.class
+edu/jmp/dao/data/Author.class
+edu/jmp/dao/management/NewsBeainImpl.class
+edu/jmp/Main.class
+edu/jmp/facade/NewsFacade.class
+edu/jmp/dao/DatabaseManager.class
