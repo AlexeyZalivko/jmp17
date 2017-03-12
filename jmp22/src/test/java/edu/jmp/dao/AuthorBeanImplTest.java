@@ -47,7 +47,6 @@ public class AuthorBeanImplTest {
         final List<Author> authors = bean.getAll();
 
         assertNotNull(authors);
-        assertEquals(authors.size(), 3);
     }
 
 }

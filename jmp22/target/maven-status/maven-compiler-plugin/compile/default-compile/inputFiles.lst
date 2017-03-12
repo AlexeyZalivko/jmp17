@@ -1,9 +1,15 @@
-/home/alex/workspaces/jmp17/jmp22/src/main/java/edu/jmp/dao/NewsBeanImpl.java
 /home/alex/workspaces/jmp17/jmp22/src/main/java/edu/jmp/dao/data/NewsItem.java
 /home/alex/workspaces/jmp17/jmp22/src/main/java/edu/jmp/Main.java
 /home/alex/workspaces/jmp17/jmp22/src/main/java/edu/jmp/dao/AuthorBean.java
+/home/alex/workspaces/jmp17/jmp22/src/main/java/edu/jmp/ui/frames/data/NewsDisplayData.java
 /home/alex/workspaces/jmp17/jmp22/src/main/java/edu/jmp/dao/AuthorBeanImpl.java
 /home/alex/workspaces/jmp17/jmp22/src/main/java/edu/jmp/dao/NewsBean.java
 /home/alex/workspaces/jmp17/jmp22/src/main/java/edu/jmp/dao/management/SQLHelper.java
 /home/alex/workspaces/jmp17/jmp22/src/main/java/edu/jmp/dao/data/Author.java
+/home/alex/workspaces/jmp17/jmp22/src/main/java/edu/jmp/ui/frames/data/NewsListDisplayData.java
 /home/alex/workspaces/jmp17/jmp22/src/main/java/edu/jmp/facade/NewsFacade.java
+/home/alex/workspaces/jmp17/jmp22/src/main/java/edu/jmp/facade/NewsFacadeImpl.java
+/home/alex/workspaces/jmp17/jmp22/src/main/java/edu/jmp/dao/NewsBeanImpl.java
+/home/alex/workspaces/jmp17/jmp22/src/main/java/edu/jmp/ui/frames/MainFrame.java
+/home/alex/workspaces/jmp17/jmp22/src/main/java/edu/jmp/ui/frames/model/NewsTableModel.java
+/home/alex/workspaces/jmp17/jmp22/src/main/java/edu/jmp/ui/frames/data/NewsTableDisplayData.java

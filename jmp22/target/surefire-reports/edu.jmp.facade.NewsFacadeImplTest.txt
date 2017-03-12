@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: edu.jmp.dao.NewsBeanImplTest
+Test set: edu.jmp.facade.NewsFacadeImplTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.06 sec
