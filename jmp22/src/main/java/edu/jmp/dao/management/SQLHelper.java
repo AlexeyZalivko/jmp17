@@ -2,6 +2,9 @@ package edu.jmp.dao.management;
 
 import org.h2.jdbcx.JdbcConnectionPool;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 /**
  * Created by alex on 12.03.17.
  */
@@ -19,6 +22,12 @@ public class SQLHelper {
             }
         }
         return pool;
+    }
+
+    public static Connection getConnection() throws SQLException {
+        final Connection conn = getConnectionPool().getConnection();
+        conn.setAutoCommit(true);
+        return conn;
     }
 
 
