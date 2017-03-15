@@ -30,11 +30,11 @@ public class UserBeanImpl implements UserBean {
         try (Connection conn = SQLHelper.getConnection()) {
             statement = conn.createStatement();
 
-            final ResultSet results = statement.executeQuery(USER_GET_BY_ID
-                    + id
-            );
+            final ResultSet results = statement.executeQuery(USER_GET_BY_ID + id);
 
-            user = getUser(results);
+            if (results != null && results.next()) {
+                user = getUser(results);
+            }
         } catch (SQLException e) {
             log.warning(e.getMessage());
             throw e;

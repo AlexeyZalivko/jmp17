@@ -32,6 +32,23 @@ public class UserService {
     public Response getUser(@PathParam("id") Long id) {
 
         String result = null;
+        User user = null;
+        try {
+            user = userBean.getUserById(id);
+            result = gson.toJson(user);
+        } catch (SQLException e) {
+            log.warning(e.getMessage());
+            result = e.getMessage();
+        }
+
+        return Response.status(200).entity(result).build();
+    }
+
+    @GET
+    @Path("/")
+    public Response getUsers() {
+
+        String result = null;
         List<User> users = null;
         try {
             users = userBean.getAllUsers();
@@ -43,4 +60,5 @@ public class UserService {
 
         return Response.status(200).entity(result).build();
     }
+
 }
