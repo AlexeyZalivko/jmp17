@@ -19,7 +19,7 @@ public class UserBeanImpl implements UserBean {
     private static Logger log = Logger.getLogger(UserBeanImpl.class.getName());
 
     private static String USER_GET_BY_ID = "SELECT ID, LOGIN, FIRST_NAME, LAST_NAME, MAIL FROM USERS WHERE ID=";
-    private static String USER_GET_ALL = "SELECT ID, LOGIN, FIRST_NAME, LAST_NAME, MAIL FROM USERS WHERE";
+    private static String USER_GET_ALL = "SELECT ID, LOGIN, FIRST_NAME, LAST_NAME, MAIL FROM USERS";
     private static String USER_INSERT = "INSERT INTO USERS(LOGIN, FIRST_NAME, LAST_NAME, MAIL) VALUES('";
 
     public User getUserById(final Long id) throws SQLException {

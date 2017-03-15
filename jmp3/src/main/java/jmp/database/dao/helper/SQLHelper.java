@@ -10,7 +10,7 @@ import java.sql.SQLException;
  */
 public class SQLHelper {
 
-    private static String JDBC_CONNECTION_STRING = "jdbc:h2:mem:test;INIT=runscript from 'classpath:scrips/init.sql';DB_CLOSE_DELAY=-1";
+    private static String JDBC_CONNECTION_STRING = "jdbc:h2:mem:test;INIT=runscript from 'classpath:scripts/init.sql';DB_CLOSE_DELAY=-1";
 
     private static JdbcConnectionPool pool = null;
 
