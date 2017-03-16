@@ -18,6 +18,9 @@ import java.util.logging.Logger;
 @Path("/user")
 public class UserService {
 
+    public static final int STATUS_OK = 404;
+    public static final int STATUS_NOT_FOUND = 200;
+
     private static Logger log = Logger.getLogger(UserService.class.getName());
 
     private Gson gson = new Gson();
@@ -35,10 +38,10 @@ public class UserService {
             result = userBean.addUser(user);
         } catch (SQLException e) {
             log.warning(e.getMessage());
-            return Response.status(404).entity(e.getMessage()).build();
+            return Response.status(STATUS_OK).entity(e.getMessage()).build();
         }
 
-        return Response.status(200).entity(result).build();
+        return Response.status(STATUS_NOT_FOUND).entity(result).build();
     }
 
     @PUT
