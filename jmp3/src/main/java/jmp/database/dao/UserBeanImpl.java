@@ -21,7 +21,9 @@ public class UserBeanImpl implements UserBean {
     private static String USER_GET_BY_ID = "SELECT ID, LOGIN, FIRST_NAME, LAST_NAME, MAIL FROM USERS WHERE ID=";
     private static String USER_GET_ALL = "SELECT ID, LOGIN, FIRST_NAME, LAST_NAME, MAIL FROM USERS";
     private static String USER_INSERT = "INSERT INTO USERS(LOGIN, FIRST_NAME, LAST_NAME, MAIL) VALUES('";
+    private static String USER_UPDATE = "UPDATE USERS SET ";
 
+    @Override
     public User getUserById(final Long id) throws SQLException {
 
         Statement statement = null;
@@ -47,10 +49,11 @@ public class UserBeanImpl implements UserBean {
         return user;
     }
 
-    public void addUser(final User user) throws SQLException {
+    @Override
+    public User addUser(final User user) throws SQLException {
 
         if (user == null) {
-            return;
+            return null;
         }
 
         Statement statement = null;
@@ -58,7 +61,7 @@ public class UserBeanImpl implements UserBean {
         try (Connection conn = SQLHelper.getConnection()) {
             statement = conn.createStatement();
 
-            statement.execute(USER_INSERT
+            final int result = statement.executeUpdate(USER_INSERT
                     + user.getLogin()
                     + "', '"
                     + user.getFirstName()
@@ -69,6 +72,17 @@ public class UserBeanImpl implements UserBean {
                     + "')"
             );
 
+            if (result == 0) {
+                throw new SQLException("Creating user failed");
+            }
+
+            try (ResultSet set = statement.getGeneratedKeys()) {
+                if (set.next()) {
+                    user.setId(set.getLong(1));
+                } else {
+                    throw new SQLException("Creating user failed. Key wasn't created.");
+                }
+            }
         } catch (SQLException e) {
             log.warning(e.getMessage());
             throw e;
@@ -77,9 +91,10 @@ public class UserBeanImpl implements UserBean {
                 statement.close();
             }
         }
-
+        return user;
     }
 
+    @Override
     public List<User> getAllUsers() throws SQLException {
 
         Statement statement = null;
@@ -106,6 +121,44 @@ public class UserBeanImpl implements UserBean {
         }
 
         return users;
+    }
+
+    @Override
+    public void updateUser(final User user) throws SQLException {
+
+        if (user == null) {
+            return;
+        }
+
+        Statement statement = null;
+
+        try (Connection conn = SQLHelper.getConnection()) {
+            statement = conn.createStatement();
+
+            final int result = statement.executeUpdate(USER_UPDATE
+                    + "FIRST_NAME = '"
+                    + user.getFirstName()
+                    + "', LAST_NAME = '"
+                    + user.getLastName()
+                    + "', MAIL = '"
+                    + user.getMail()
+                    + "' WHERE ID = "
+                    + user.getId()
+            );
+
+            if (result == 0) {
+                throw new SQLException("Creating user failed");
+            }
+
+        } catch (SQLException e) {
+            log.warning(e.getMessage());
+            throw e;
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+        }
+
     }
 
     private User getUser(final ResultSet results) throws SQLException {

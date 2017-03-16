@@ -12,7 +12,9 @@ public interface UserBean {
 
     User getUserById(final Long id) throws SQLException;
 
-    void addUser(final User user) throws SQLException;
+    User addUser(final User user) throws SQLException;
 
     List<User> getAllUsers() throws SQLException;
+
+    void updateUser(final User user) throws SQLException;
 }

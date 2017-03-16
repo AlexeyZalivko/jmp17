@@ -1,6 +1,4 @@
-package jmp.database.data;
-
-import lombok.Data;
+package jmp.data;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

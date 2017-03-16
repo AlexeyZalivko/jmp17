@@ -1,14 +1,12 @@
 package jmp.service;
 
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import jmp.database.dao.UserBean;
 import jmp.database.dao.UserBeanImpl;
 import jmp.database.data.User;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.List;
@@ -25,6 +23,33 @@ public class UserService {
     private Gson gson = new Gson();
 
     private UserBean userBean = new UserBeanImpl();
+
+    @POST
+    @Path("/")
+    @Consumes(MediaType.APPLICATION_XML)
+    public Response addNewUser(final User user) {
+        log.info(user.toString());
+
+        User result = null;
+        try {
+            result = userBean.addUser(user);
+        } catch (SQLException e) {
+            log.warning(e.getMessage());
+            return Response.status(404).entity(e.getMessage()).build();
+        }
+
+        return Response.status(200).entity(result).build();
+    }
+
+    @PUT
+    @Path("/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateNewUser(final User user) {
+        log.info(user.toString());
+        System.out.println(user);
+
+        return Response.status(200).build();
+    }
 
 
     @GET
