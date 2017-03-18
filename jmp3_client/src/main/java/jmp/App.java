@@ -1,7 +1,7 @@
 package jmp;
 
+import jmp.clients.ImageClient;
 import jmp.clients.UserClient;
-import jmp.data.UpdateUser;
 import jmp.data.User;
 import org.apache.log4j.Logger;
 
@@ -13,24 +13,40 @@ import java.util.Random;
 public class App {
     private static Logger log = Logger.getLogger(App.class.getName());
 
+    private static UserClient client = new UserClient();
+    private static ImageClient imageClient = new ImageClient();
+
     public static void main(String[] args) {
-        final UserClient client = new UserClient();
         try {
-            log.info("Create user: ");
-            User user = getUser();
-            user = client.addUser(getUser());
-            log.info("User: " + user);
+            User user = createUser();
+            user = updateUser(user);
 
-
-            //final UpdateUser updateUser = new UpdateUser(user);
-            user.setLastName("LastName");
-            user.setFirstName("AnotherFirstName");
-            log.info("Update user: " + user);
-            final User updateUserNew = client.updateUser(user);
-            log.info("User: " + user);
+            uploadImage(user);
         } catch (Exception e) {
             log.warn(e.getMessage());
         }
+    }
+
+    private static void uploadImage(final User user) {
+        final String imageName = "thumb";
+        imageClient.uploadImage(user, imageName);
+    }
+
+    private static User updateUser(final User user) throws Exception {
+        user.setLastName("LastName");
+        user.setFirstName("AnotherFirstName");
+        log.info("Update user: " + user);
+        final User updateUserNew = client.updateUser(user);
+        log.info("User: " + user);
+        return updateUserNew;
+    }
+
+    private static User createUser() throws Exception {
+        log.info("Create user: ");
+        User user = getUser();
+        user = client.addUser(getUser());
+        log.info("User: " + user);
+        return user;
     }
 
     private static User getUser() {

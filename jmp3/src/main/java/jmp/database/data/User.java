@@ -15,6 +15,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String mail;
+    private String logo;
 
     public Long getId() {
         return id;
@@ -59,6 +60,15 @@ public class User {
     @XmlElement
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    @XmlElement
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     @Override

@@ -18,7 +18,7 @@ public class UserBeanImpl implements UserBean {
 
     private static Logger log = Logger.getLogger(UserBeanImpl.class.getName());
 
-    private static String USER_GET_BY_ID = "SELECT ID, LOGIN, FIRST_NAME, LAST_NAME, MAIL FROM USERS WHERE ID=";
+    private static String USER_GET_BY_ID = "SELECT ID, LOGIN, FIRST_NAME, LAST_NAME, MAIL, LOGO FROM USERS WHERE ID=";
     private static String USER_GET_ALL = "SELECT ID, LOGIN, FIRST_NAME, LAST_NAME, MAIL FROM USERS";
     private static String USER_INSERT = "INSERT INTO USERS(LOGIN, FIRST_NAME, LAST_NAME, MAIL) VALUES('";
     private static String USER_UPDATE = "UPDATE USERS SET ";
@@ -173,6 +173,7 @@ public class UserBeanImpl implements UserBean {
         user.setFirstName(results.getString(3));
         user.setLastName(results.getString(4));
         user.setMail(results.getString(5));
+        user.setLogo(results.getString(6));
         return user;
     }
 
