@@ -16,5 +16,5 @@ public interface UserBean {
 
     List<User> getAllUsers() throws SQLException;
 
-    void updateUser(final User user) throws SQLException;
+    User updateUser(final User user) throws SQLException;
 }

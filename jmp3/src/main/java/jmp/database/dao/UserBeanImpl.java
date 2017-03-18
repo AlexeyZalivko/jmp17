@@ -124,10 +124,10 @@ public class UserBeanImpl implements UserBean {
     }
 
     @Override
-    public void updateUser(final User user) throws SQLException {
+    public User updateUser(final User user) throws SQLException {
 
         if (user == null) {
-            return;
+            return null;
         }
 
         Statement statement = null;
@@ -158,7 +158,7 @@ public class UserBeanImpl implements UserBean {
                 statement.close();
             }
         }
-
+        return user;
     }
 
     private User getUser(final ResultSet results) throws SQLException {

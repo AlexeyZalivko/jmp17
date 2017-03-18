@@ -18,9 +18,6 @@ import java.util.logging.Logger;
 @Path("/user")
 public class UserService {
 
-    public static final int STATUS_OK = 404;
-    public static final int STATUS_NOT_FOUND = 200;
-
     private static Logger log = Logger.getLogger(UserService.class.getName());
 
     private Gson gson = new Gson();
@@ -38,20 +35,29 @@ public class UserService {
             result = userBean.addUser(user);
         } catch (SQLException e) {
             log.warning(e.getMessage());
-            return Response.status(STATUS_OK).entity(e.getMessage()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
 
-        return Response.status(STATUS_NOT_FOUND).entity(result).build();
+        return Response.status(Response.Status.OK).entity(result).build();
     }
 
     @PUT
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateNewUser(final User user) {
+    public Response updateUser(final User user) {
         log.info(user.toString());
         System.out.println(user);
 
-        return Response.status(200).build();
+        User updatedUser = null;
+        try {
+            updatedUser = userBean.updateUser(user);
+        } catch (SQLException e) {
+            log.warning(e.getMessage());
+            return Response.status(Response.Status.NOT_ACCEPTABLE).entity(e.getMessage()).build();
+        }
+
+        final Gson gson = new Gson();
+        return Response.status(Response.Status.OK).entity(gson.toJson(updatedUser)).build();
     }
 
 
@@ -69,7 +75,7 @@ public class UserService {
             result = e.getMessage();
         }
 
-        return Response.status(200).entity(result).build();
+        return Response.status(Response.Status.OK).entity(result).build();
     }
 
     @GET
@@ -86,7 +92,7 @@ public class UserService {
             result = e.getMessage();
         }
 
-        return Response.status(200).entity(result).build();
+        return Response.status(Response.Status.OK).entity(result).build();
     }
 
 }

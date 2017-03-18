@@ -28,22 +28,33 @@ public class UserClient {
         final ClientResponse response = resource.accept(MediaType.APPLICATION_XML)
                 .post(ClientResponse.class, user);
 
-        return processResponse(response);
+        processResponse(response);
+
+        final User result = response.getEntity(User.class);
+        response.close();
+
+        return result;
     }
 
     public User updateUser(final User user) throws Exception {
         final WebResource resource = init(Constants.USER_URL);
 
         final Gson gson = new Gson();
+        final String userString = gson.toJson(user);
 
-        final String userJSON = gson.toJson(user);
         final ClientResponse response = resource.accept(MediaType.APPLICATION_JSON)
-                .put(ClientResponse.class, user);
+                .type(MediaType.APPLICATION_JSON)
+                .put(ClientResponse.class, userString);
 
-        return processResponse(response);
+        processResponse(response);
+        final String resultJson = response.getEntity(String.class);
+        response.close();
+
+        final User resultUser = gson.fromJson(resultJson, User.class);
+        return resultUser;
     }
 
-    private User processResponse(final ClientResponse response) throws Exception {
+    private void processResponse(final ClientResponse response) throws Exception {
 
         final int status = response.getStatus();
         log.info("Response status: " + status);
@@ -51,8 +62,6 @@ public class UserClient {
         if (status != 200) {
             throw new Exception("Service is not working correctly. Response code " + status);
         }
-
-        return response.getEntity(User.class);
     }
 
 }

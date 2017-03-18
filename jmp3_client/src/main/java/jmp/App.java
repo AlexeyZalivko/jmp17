@@ -1,6 +1,7 @@
 package jmp;
 
 import jmp.clients.UserClient;
+import jmp.data.UpdateUser;
 import jmp.data.User;
 import org.apache.log4j.Logger;
 
@@ -21,10 +22,11 @@ public class App {
             log.info("User: " + user);
 
 
-            log.info("Update user: ");
-            user.setFirstName("AnotherFirstName");
+            //final UpdateUser updateUser = new UpdateUser(user);
             user.setLastName("LastName");
-            user = client.updateUser(user);
+            user.setFirstName("AnotherFirstName");
+            log.info("Update user: " + user);
+            final User updateUserNew = client.updateUser(user);
             log.info("User: " + user);
         } catch (Exception e) {
             log.warn(e.getMessage());
