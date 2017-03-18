@@ -3,6 +3,7 @@ package jmp.database.dao;
 import com.google.common.collect.Lists;
 import jmp.database.dao.helper.SQLHelper;
 import jmp.database.data.User;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -32,7 +33,7 @@ public class UserBeanImpl implements UserBean {
         try (Connection conn = SQLHelper.getConnection()) {
             statement = conn.createStatement();
 
-            final ResultSet results = statement.executeQuery(USER_GET_BY_ID + id);
+            ResultSet results = statement.executeQuery(USER_GET_BY_ID + id);
 
             if (results != null && results.next()) {
                 user = getUser(results);
@@ -150,6 +151,41 @@ public class UserBeanImpl implements UserBean {
                 throw new SQLException("Creating user failed");
             }
 
+        } catch (SQLException e) {
+            log.warning(e.getMessage());
+            throw e;
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+        }
+        return user;
+    }
+
+    @Override
+    public User addUserLogo(final String id, final String fileName) throws SQLException {
+        User user = null;
+        if (StringUtils.isEmpty(id) || StringUtils.isEmpty(fileName)) {
+            return user;
+        }
+
+        Statement statement = null;
+
+        try (Connection conn = SQLHelper.getConnection()) {
+            statement = conn.createStatement();
+
+            final int result = statement.executeUpdate(USER_UPDATE
+                    + "LOGO = '"
+                    + fileName
+                    + "' WHERE ID = "
+                    + id
+            );
+
+            if (result == 0) {
+                throw new SQLException("Add user logo failed");
+            }
+
+            user = getUserById(Long.valueOf(id));
         } catch (SQLException e) {
             log.warning(e.getMessage());
             throw e;

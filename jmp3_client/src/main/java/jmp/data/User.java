@@ -13,6 +13,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String mail;
+    private String logo;
 
     public Long getId() {
         return id;
@@ -59,6 +60,15 @@ public class User {
         this.mail = mail;
     }
 
+    public String getLogo() {
+        return logo;
+    }
+
+    @XmlElement
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
@@ -67,6 +77,7 @@ public class User {
         sb.append(", firstName='").append(firstName).append('\'');
         sb.append(", lastName='").append(lastName).append('\'');
         sb.append(", mail='").append(mail).append('\'');
+        sb.append(", logo='").append(logo).append('\'');
         sb.append('}');
         return sb.toString();
     }

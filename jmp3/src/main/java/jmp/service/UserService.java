@@ -56,7 +56,6 @@ public class UserService {
             return Response.status(Response.Status.NOT_ACCEPTABLE).entity(e.getMessage()).build();
         }
 
-        final Gson gson = new Gson();
         return Response.status(Response.Status.OK).entity(gson.toJson(updatedUser)).build();
     }
 

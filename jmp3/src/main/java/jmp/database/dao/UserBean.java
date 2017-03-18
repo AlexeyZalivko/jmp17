@@ -17,4 +17,6 @@ public interface UserBean {
     List<User> getAllUsers() throws SQLException;
 
     User updateUser(final User user) throws SQLException;
+
+    User addUserLogo(final String id, final String fileName) throws SQLException;
 }

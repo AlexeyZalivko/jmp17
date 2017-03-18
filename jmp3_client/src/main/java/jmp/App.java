@@ -21,15 +21,17 @@ public class App {
             User user = createUser();
             user = updateUser(user);
 
-            uploadImage(user);
+            User userWithImage = uploadImage(user);
         } catch (Exception e) {
             log.warn(e.getMessage());
         }
     }
 
-    private static void uploadImage(final User user) {
+    private static User uploadImage(final User user) {
         final String imageName = "thumb";
-        imageClient.uploadImage(user, imageName);
+        final User result = imageClient.uploadImage(user, imageName);
+        log.info("User with logo: " + result);
+        return result;
     }
 
     private static User updateUser(final User user) throws Exception {

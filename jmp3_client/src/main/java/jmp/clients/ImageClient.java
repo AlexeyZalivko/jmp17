@@ -1,5 +1,6 @@
 package jmp.clients;
 
+import com.google.gson.Gson;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -18,7 +19,10 @@ import java.io.File;
  */
 public class ImageClient {
     public static final String UNDERLINE_SEPARATOR = "_";
+
     private static Logger log = Logger.getLogger(ImageClient.class.getName());
+
+    private static Gson gson = new Gson();
 
     private static final String PNG_EXTENSION = ".png";
 
@@ -28,21 +32,25 @@ public class ImageClient {
         return client.resource(Constants.IMAGE_URL);
     }
 
-    public void uploadImage(final User user, final String imageName) {
+    public User uploadImage(final User user, final String imageName) {
         final WebResource resource = init();
 
         final File file = new File(getClass().getClassLoader().getResource(imageName + PNG_EXTENSION).getFile());
-        final String userLogoName = user.getLogin() + UNDERLINE_SEPARATOR + imageName;
 
         final FormDataMultiPart form = new FormDataMultiPart();
         form.bodyPart(new FileDataBodyPart("file", file, MediaType.APPLICATION_OCTET_STREAM_TYPE));
-        form.field("login", user.getLogin());
+        form.field("id", user.getId().toString());
 
         final ClientResponse response = resource.type(MediaType.MULTIPART_FORM_DATA_TYPE)
                 .post(ClientResponse.class, form);
 
         log.info("Response: " + response.getClientResponseStatus());
 
+        final String resultJson = response.getEntity(String.class);
+        final User resultUser = gson.fromJson(resultJson, User.class);
+
         response.close();
+
+        return resultUser;
     }
 }
