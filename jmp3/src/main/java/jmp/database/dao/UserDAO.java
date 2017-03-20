@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by alex on 15.03.17.
  */
-public interface UserBean {
+public interface UserDAO {
 
     User getUserById(final Long id) throws SQLException;
 

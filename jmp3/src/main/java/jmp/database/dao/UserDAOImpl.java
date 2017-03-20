@@ -15,12 +15,12 @@ import java.util.logging.Logger;
 /**
  * Created by alex on 15.03.17.
  */
-public class UserBeanImpl implements UserBean {
+public class UserDAOImpl implements UserDAO {
 
-    private static Logger log = Logger.getLogger(UserBeanImpl.class.getName());
+    private static Logger log = Logger.getLogger(UserDAOImpl.class.getName());
 
     private static String USER_GET_BY_ID = "SELECT ID, LOGIN, FIRST_NAME, LAST_NAME, MAIL, LOGO FROM USERS WHERE ID=";
-    private static String USER_GET_ALL = "SELECT ID, LOGIN, FIRST_NAME, LAST_NAME, MAIL FROM USERS";
+    private static String USER_GET_ALL = "SELECT ID, LOGIN, FIRST_NAME, LAST_NAME, MAIL, LOGO FROM USERS";
     private static String USER_INSERT = "INSERT INTO USERS(LOGIN, FIRST_NAME, LAST_NAME, MAIL) VALUES('";
     private static String USER_UPDATE = "UPDATE USERS SET ";
 

@@ -14,7 +14,7 @@ public class SQLHelper {
 
     private static JdbcConnectionPool pool = null;
 
-    public static JdbcConnectionPool getConnectionPool() {
+    public static JdbcConnectionPool getConnectionPool() throws SQLException {
         if (pool == null) {
             synchronized (SQLHelper.class) {
                 if (pool == null) {
