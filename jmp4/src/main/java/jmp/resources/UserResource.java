@@ -2,6 +2,7 @@ package jmp.resources;
 
 import jmp.exceptions.ServiceException;
 import jmp.services.data.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -16,4 +17,8 @@ public interface UserResource {
     List<User> getAllUsers() throws ServiceException;
 
     void deleteUser(final Long id) throws ServiceException;
+
+    byte[] getUserLogo(final Long id) throws ServiceException;
+
+    User uploadUserLogo(final Long id, final MultipartFile image) throws ServiceException;
 }

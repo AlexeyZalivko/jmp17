@@ -1,7 +1,9 @@
 package jmp.services;
 
+import jmp.dao.entity.LogoEntity;
 import jmp.exceptions.ServiceException;
 import jmp.services.data.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,4 +21,8 @@ public interface UserService {
     List<User> getAllUsers() throws ServiceException;
 
     void remove(final Long id) throws ServiceException;
+
+    byte[] getUserLogo(final Long id) throws ServiceException;
+
+    User addUserLogo(final Long id, final MultipartFile image) throws ServiceException;
 }

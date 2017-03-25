@@ -3,6 +3,7 @@ package jmp.dao.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Blob;
 
 /**
  * Created by alex on 24.03.17.
@@ -30,4 +31,6 @@ public class UserEntity {
     private String mail;
     @Column(name = "LOGIN")
     private String login;
+    @Column(name = "LOGO")
+    private Blob image;
 }

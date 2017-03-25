@@ -5,6 +5,7 @@ import jmp.services.UserService;
 import jmp.services.data.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -46,5 +47,22 @@ public class UserResourceImpl implements UserResource {
     @Override
     public void deleteUser(@RequestParam("id") final Long id) throws ServiceException {
         userService.remove(id);
+    }
+
+    @RequestMapping(value = "/image", method = RequestMethod.GET, produces = "image/png")
+    @Override
+    public
+    @ResponseBody
+    byte[] getUserLogo(@RequestParam("id") final Long id) throws ServiceException {
+        return userService.getUserLogo(id);
+    }
+
+    @RequestMapping(value = "/image", method = RequestMethod.POST)
+    @Override
+    public
+    @ResponseBody
+    User uploadUserLogo(@RequestParam("id") final Long id, @RequestParam("file") final MultipartFile image)
+            throws ServiceException {
+        return userService.addUserLogo(id, image);
     }
 }

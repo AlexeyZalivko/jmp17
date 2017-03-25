@@ -1,16 +1,19 @@
 package jmp.services;
 
 import com.google.common.collect.Lists;
-import jmp.dao.LogoDao;
 import jmp.dao.UserDao;
-import jmp.dao.entity.LogoEntity;
 import jmp.dao.entity.UserEntity;
 import jmp.exceptions.ServiceException;
 import jmp.services.data.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -25,8 +28,7 @@ public class UserServiceImpl implements UserService {
     public static final String USER_CREATION_PROBLEM = "User creation problem";
     public static final String USER_ISN_T_EXIST = "User isn't exist.";
     public static final int ERROR_CODE = 500;
-    @Autowired
-    private LogoDao logoDao;
+    public static final String IMAGE_ISN_T_EXIST = "Image isn't exist";
 
     @Autowired
     private UserDao userDao;
@@ -74,13 +76,14 @@ public class UserServiceImpl implements UserService {
         }
 
         return userEntities.stream()
-                .map(u->{
+                .map(u -> {
                     final User user = new User();
                     user.setId(u.getId());
                     user.setEmail(u.getMail());
                     user.setLogin(u.getLogin());
                     user.setFirstName(u.getFirstName());
                     user.setLastName(u.getLastName());
+                    user.setLogo(getImageByBlob(u.getImage()));
                     return user;
                 })
                 .collect(toList());
@@ -92,8 +95,39 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(ERROR_CODE, REQUEST_PARAMETER_IS_NULL);
         }
 
-        logoDao.delete(id);
         userDao.delete(id);
+    }
+
+    @Override
+    public byte[] getUserLogo(final Long id) throws ServiceException {
+        final User user = getUserById(id);
+        if (user == null || user.getLogo() == null) {
+            throw new ServiceException(ERROR_CODE, IMAGE_ISN_T_EXIST);
+        }
+
+        return user.getLogo();
+    }
+
+    @Override
+    public User addUserLogo(final Long id, final MultipartFile image) throws ServiceException {
+        if (id == null || image == null) {
+            throw new ServiceException(ERROR_CODE, REQUEST_PARAMETER_IS_NULL);
+        }
+
+        final User user = getUserById(id);
+
+        if (user == null) {
+            throw new ServiceException(ERROR_CODE, USER_ISN_T_EXIST);
+        }
+
+        try {
+            user.setLogo(image.getBytes());
+        } catch (IOException e) {
+            throw new ServiceException(ERROR_CODE, e.getMessage());
+        }
+
+        insertLogo(user, id);
+        return user;
     }
 
     private UserEntity insertUser(final User user) throws ServiceException {
@@ -119,11 +153,16 @@ public class UserServiceImpl implements UserService {
         return userEntity;
     }
 
-    private void insertLogo(final User user, final Long userId) {
-        final LogoEntity logo = new LogoEntity();
-        logo.setId(userId);
-        logo.setImage(user.getLogo());
-        logoDao.create(logo);
+    private void insertLogo(final User user, final Long userId) throws ServiceException {
+        final UserEntity userEntity = userDao.getUseById(userId);
+        if (userEntity != null) {
+            try {
+                userEntity.setImage(new SerialBlob(user.getLogo()));
+            } catch (SQLException e) {
+                throw new ServiceException(ERROR_CODE, REQUEST_PARAMETER_IS_NULL);
+            }
+            userDao.update(userEntity);
+        }
     }
 
     private User getUser(final UserEntity userEntity) throws ServiceException {
@@ -139,12 +178,21 @@ public class UserServiceImpl implements UserService {
         user.setLogin(userEntity.getLogin());
         user.setEmail(userEntity.getMail());
 
-        final LogoEntity logo = logoDao.getLogoById(userEntity.getId());
-        if (logo == null || logo.getImage() == null) {
-            return user;
+        user.setLogo(getImageByBlob(userEntity.getImage()));
+        return user;
+    }
+
+    private byte[] getImageByBlob(final Blob blob) {
+        if (blob == null) {
+            return null;
         }
 
-        user.setLogo(logo.getImage());
-        return user;
+        try {
+            final int lenghts = (int) blob.length();
+            return blob.getBytes(1, lenghts);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
