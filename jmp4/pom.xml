@@ -26,6 +26,7 @@
         <log4j.version>1.2.17</log4j.version>
         <spring-boot.version>1.4.3.RELEASE</spring-boot.version>
         <guava.version>21.0</guava.version>
+        <io.version>2.5</io.version>
     </properties>
 
     <dependencies>
@@ -70,7 +71,18 @@
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+            <version>1.4.3.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
 
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${io.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

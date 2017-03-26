@@ -1,6 +1,5 @@
 package jmp.services;
 
-import jmp.dao.entity.LogoEntity;
 import jmp.exceptions.ServiceException;
 import jmp.services.data.User;
 import org.springframework.web.multipart.MultipartFile;
