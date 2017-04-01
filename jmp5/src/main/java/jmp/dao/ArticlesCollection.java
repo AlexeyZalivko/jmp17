@@ -9,5 +9,6 @@ import java.util.List;
  */
 @Data
 public class ArticlesCollection {
+    private String status;
     private List<Article> items;
 }

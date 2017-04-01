@@ -1,7 +1,7 @@
 package jmp.database.dbtools;
 
-import jmp.database.dbtools.stubs.Stub;
-import jmp.database.dbtools.stubs.UserStub;
+import jmp.database.dbtools.stubs.*;
+import jmp.exceptions.BussinessException;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -9,8 +9,8 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Logger;
 
 /**
@@ -37,7 +37,7 @@ public class DBInit {
      *
      * @return
      */
-    public static void init(final Connection connection) throws IOException, SQLException {
+    public static void init(final Connection connection) throws IOException, SQLException, BussinessException, ParseException {
         if (dbInit == null) {
             synchronized (DBInit.class) {
                 if (dbInit == null) {
@@ -65,6 +65,12 @@ public class DBInit {
         log.info("Starting data creating...");
         final Stub userStub = new UserStub();
         userStub.addNewOne(connection);
+        final FriendshipStub friendshipStub = new FriendshipStub();
+        friendshipStub.addNewOne(connection);
+        final Stub articlesStub = new ArticleStub();
+        articlesStub.addNewOne(connection);
+        final LikesStub likesStub = new LikesStub();
+        likesStub.addNewOne(connection);
     }
 
 }

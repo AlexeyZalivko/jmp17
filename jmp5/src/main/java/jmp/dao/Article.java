@@ -1,4 +1,4 @@
-package jmp;
+package jmp.dao;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Data
 public class Article {
+    private Long id;
     private String title;
-    private Date pubDate;
     private String description;
 }

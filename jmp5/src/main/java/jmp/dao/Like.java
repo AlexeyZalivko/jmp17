@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by alex on 01.04.17.
  */
 @Data
-public class Likes {
+public class Like {
     private Long postId;
     private Long userId;
     private Date timestamp;
