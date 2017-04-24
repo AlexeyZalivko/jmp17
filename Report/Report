@@ -1,0 +1,38 @@
+1. Скачиваем tomcat 8 и распаковываем в home директории
+	теперь нужно открыть tomcat-users.xml и добавить 2 роли manager-gui и manager-script
+	создаем пользователя admin/admin с вышеописанными ролями
+2. apt-get install apache2*
+3. apt-get install libapache2-mod-jk
+	Это автоматически установит и подключит модуль к Apache2
+4. рестатрт apache-web-сервера
+5. Открываем /etc/apache2/sites-available/000-default.conf
+
+Расскоментируем SeverName и вписываем localhost
+
+Добавляем:
+
+Alias / /home/alex/Dev/tomcat8/webapp/app
+<Directory "/home/alex/Dev/tomcat8/webapp/app">
+        Order allow,deny
+        Allow from all
+        Require all granted
+</Directory>
+JkMount /* ajp13_worker
+
+Это позволяет делать маппинг на tomcat приложения
+
+
+6. Открываем /etc/libapache2-mod-jk/workers.properties
+прописываем workers.tomcat_home и workers.java_home
+
+в моем случае:
+workers.tomcat_home=/home/alex/Dev/tomcat8
+workers.java_home=/usr/lib/jvm/java-8-oracle
+
+7. собираем приложение из архива и деплоим его на tomcat
+
+8. Рестартуем апач: #service apache2 restart
+
+9. Идем в браузер
+http://localhost/app/
+смотрим что Apache теперь тянет все по относит. путям:
