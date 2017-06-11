@@ -9,5 +9,5 @@ import java.math.BigDecimal;
  * Created by alex on 2017-06-11.
  */
 public interface ExchangeManager {
-    Account convert(Account account, CurrencyUtils currency, BigDecimal amount);
+    Account convert(Account account, CurrencyUtils fromCurrency, CurrencyUtils toCurrency, BigDecimal amount);
 }

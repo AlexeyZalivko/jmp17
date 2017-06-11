@@ -11,4 +11,6 @@ import java.util.Map;
  */
 public interface CurrencyRate {
     Map<CurrencyUtils, BigDecimal> getRates() throws IOException;
+
+    BigDecimal getRateByCurrency(final CurrencyUtils currency) throws IOException;
 }

@@ -1,5 +1,6 @@
 package exchange.dao;
 
+import com.google.common.collect.Maps;
 import exchange.utils.CurrencyUtils;
 import org.apache.commons.io.FileUtils;
 
@@ -22,6 +23,8 @@ public class CurrencyRateImpl implements CurrencyRate {
     public static final String ACCOUNTS_DELIMITER = "; ";
     public static final String PARAMS_DELIMITER = ": ";
 
+    private Map<CurrencyUtils, BigDecimal> rates = Maps.newHashMap();
+
     @Override
     public synchronized Map<CurrencyUtils, BigDecimal> getRates() throws IOException {
         final File file = new File(getFilePath("currency"));
@@ -30,6 +33,14 @@ public class CurrencyRateImpl implements CurrencyRate {
         }
 
         return getRates(FileUtils.readFileToString(file, UTF_8));
+    }
+
+    @Override
+    public BigDecimal getRateByCurrency(final CurrencyUtils currency) throws IOException {
+        if (rates.isEmpty()) {
+            rates.putAll(getRates());
+        }
+        return currency.equals(CurrencyUtils.USD) ? BigDecimal.ONE : rates.get(currency);
     }
 
     private String generateCurrencyRates() {
