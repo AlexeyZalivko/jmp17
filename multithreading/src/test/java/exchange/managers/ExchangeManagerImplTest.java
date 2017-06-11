@@ -52,7 +52,6 @@ public class ExchangeManagerImplTest {
 
     @Test
     public void convertByn2Usd() throws Exception {
-        System.out.println(account);
         final BigDecimal amount = BigDecimal.valueOf(2.33);
         final Account result = exchangeManager.convert(account, CurrencyUtils.BYN, CurrencyUtils.USD, amount);
 
@@ -64,7 +63,21 @@ public class ExchangeManagerImplTest {
         assertEquals(result.getAmountRub(), account.getAmountRub());
 
         assertNotNull(result);
-        System.out.println(result);
+    }
+
+    @Test
+    public void convertByn2UsdBigAmount() throws Exception {
+        final BigDecimal amount = BigDecimal.valueOf(2048);
+        final Account result = exchangeManager.convert(account, CurrencyUtils.BYN, CurrencyUtils.USD, amount);
+
+        final BigDecimal usdAmount = account.getAmountByn().divide(currencyRate.getRateByCurrency(CurrencyUtils.BYN), mathContext);
+        final BigDecimal bynAmount = account.getAmountByn().subtract(account.getAmountByn());
+
+        assertEquals(result.getAmountUsd(), account.getAmountUsd().add(usdAmount));
+        assertEquals(result.getAmountByn(), bynAmount);
+        assertEquals(result.getAmountRub(), account.getAmountRub());
+
+        assertNotNull(result);
     }
 
 }

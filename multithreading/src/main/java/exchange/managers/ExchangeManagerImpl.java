@@ -1,7 +1,5 @@
 package exchange.managers;
 
-import exchange.dao.AccountManager;
-import exchange.dao.AccountManagerImpl;
 import exchange.dao.CurrencyRate;
 import exchange.dao.CurrencyRateImpl;
 import exchange.domain.Account;
@@ -20,7 +18,6 @@ public class ExchangeManagerImpl implements ExchangeManager {
 
     private Logger log = Logger.getLogger(ExchangeManagerImpl.class.getName());
 
-    private AccountManager accountManager = new AccountManagerImpl();
     private CurrencyRate currencyRate = new CurrencyRateImpl();
 
     @Override

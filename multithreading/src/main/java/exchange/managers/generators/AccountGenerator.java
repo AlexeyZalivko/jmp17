@@ -17,7 +17,7 @@ public class AccountGenerator {
 
     public static List<Account> generateAccounts() {
         final Random rnd = new Random();
-        final int size = rnd.nextInt(2048) + 300;
+        final int size = rnd.nextInt(400) + 50;
         final List<Account> accounts = Lists.newArrayListWithCapacity(size);
 
         for (int i = 0; i < size; i++) {
